@@ -1,1 +1,1 @@
-# Expense Tracker - your new way so save money
+# Expense Tracker - your new way to save money
