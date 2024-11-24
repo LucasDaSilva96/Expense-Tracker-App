@@ -307,6 +307,25 @@ export type Database = {
           }
         ];
       };
+      feedback: {
+        Row: {
+          id: number;
+          user_id: string;
+          message: string;
+          rating: number | null;
+          created_at: string;
+        };
+
+        Insert: {
+          user_id: string;
+          message: string;
+          rating?: number | null; // Optional on insert
+        };
+        Update: {
+          message?: string;
+          rating?: number | null; // Optional on update
+        };
+      };
     };
     Functions: {
       [_ in never]: never;
