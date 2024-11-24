@@ -1,11 +1,12 @@
 import '@/global.css';
 import { useFonts } from 'expo-font';
-import { Slot, Stack } from 'expo-router';
+import { Slot } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
 import React from 'react';
+import { RootSiblingParent } from 'react-native-root-siblings';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -26,9 +27,9 @@ export default function RootLayout() {
   }
 
   return (
-    <>
+    <RootSiblingParent>
       <Slot />
       <StatusBar style='auto' />
-    </>
+    </RootSiblingParent>
   );
 }
