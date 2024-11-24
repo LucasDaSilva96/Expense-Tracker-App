@@ -24,12 +24,12 @@ export default function Toaster({ message, type, duration }: ToasterProps) {
     >
       {type === 'error' ? (
         <View className='flex-row items-center gap-2'>
-          <Ionicons name='alert-circle' size={24} color='white' />
+          <Ionicons name='alert-circle' size={24} color='#f1faee' />
           <Text>{message}</Text>
         </View>
       ) : (
         <View className='flex-row items-center gap-2'>
-          <Ionicons name='checkmark-circle' size={24} color='white' />
+          <Ionicons name='checkmark-circle' size={24} color='#f1faee' />
           <Text>{message}</Text>
         </View>
       )}

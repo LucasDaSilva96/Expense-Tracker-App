@@ -60,7 +60,7 @@ export type Database = {
           id?: string;
           name: string;
           start_date: string;
-          status: string;
+          status?: string;
           target_amount: number;
           user_id: string;
         };
@@ -71,7 +71,7 @@ export type Database = {
           id?: string;
           name?: string;
           start_date?: string;
-          status: 'active' | 'completed' | 'missed';
+          status?: string;
           target_amount?: number;
           user_id?: string;
         };
@@ -91,7 +91,7 @@ export type Database = {
           category_id: string;
           created_at: string;
           end_date: string | null;
-          frequency: string;
+          frequency: 'daily' | 'weekly' | 'monthly' | 'yearly';
           id: string;
           start_date: string;
           user_id: string;
@@ -138,7 +138,7 @@ export type Database = {
           created_at: string;
           end_date: string;
           id: string;
-          period: string;
+          period: 'week' | 'month' | 'year';
           start_date: string;
           total_expense: number;
           total_income: number;
@@ -183,7 +183,6 @@ export type Database = {
           note: string | null;
           transaction_date: string;
           type: 'income' | 'expense';
-
           user_id: string;
         };
         Insert: {
@@ -252,6 +251,14 @@ export type Database = {
       };
     };
     Views: {
+      user_analytics: {
+        Row: {
+          last_signup_date: string | null;
+          total_users: number | null;
+          users_last_30_days: number | null;
+        };
+        Relationships: [];
+      };
       user_monthly_expenses: {
         Row: {
           month: string | null;
