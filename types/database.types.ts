@@ -230,6 +230,7 @@ export type Database = {
           first_name: string;
           id: string;
           last_name: string;
+          has_membership: boolean;
         };
         Insert: {
           avatar?: string | null;
@@ -238,6 +239,7 @@ export type Database = {
           first_name: string;
           id?: string;
           last_name: string;
+          has_membership?: boolean;
         };
         Update: {
           avatar?: string | null;
@@ -246,6 +248,7 @@ export type Database = {
           first_name?: string;
           id?: string;
           last_name?: string;
+          has_membership?: boolean;
         };
         Relationships: [];
       };
