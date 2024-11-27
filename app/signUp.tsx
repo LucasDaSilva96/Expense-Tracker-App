@@ -5,6 +5,8 @@ import {
   TouchableOpacity,
   Alert,
   Image,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import React from 'react';
 import { catchError } from '@/utils/catchError';
@@ -58,84 +60,94 @@ export default function SignUpPage() {
   };
 
   return (
-    <View className='flex-1 items-center w-full p-2 justify-center gap-4'>
-      <View>
-        <Text className='font-semibold text-3xl text-center'>
-          Create Account
-        </Text>
-        <Text className='text-base text-darkGrey'>
-          Create an account to get started
-        </Text>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      className='flex-1'
+    >
+      <View className='flex-1 items-center w-full p-2 justify-center gap-4'>
+        <View>
+          <Text className='font-semibold text-3xl text-center'>
+            Create Account
+          </Text>
+          <Text className='text-base text-darkGrey'>
+            Create an account to get started
+          </Text>
+        </View>
+
+        <Image
+          source={require('@/assets/images/Scenes/Scenes07.jpg')}
+          className='w-full h-[250px] rounded-lg'
+        />
+
+        <View className='w-full gap-4'>
+          <TextInput
+            className='w-full p-4 border-2 border-gray-300 rounded-lg'
+            onChangeText={(text) =>
+              setSignUpObj({ ...singUpObj, first_name: text })
+            }
+            placeholder='First Name'
+            returnKeyType='next'
+            placeholderTextColor={'gray'}
+          />
+          <TextInput
+            className='w-full p-4 border-2 border-gray-300 rounded-lg'
+            onChangeText={(text) =>
+              setSignUpObj({ ...singUpObj, last_name: text })
+            }
+            placeholder='Last Name'
+            returnKeyType='next'
+            placeholderTextColor={'gray'}
+          />
+          <TextInput
+            className='w-full p-4 border-2 border-gray-300 rounded-lg'
+            onChangeText={(text) => setSignUpObj({ ...singUpObj, email: text })}
+            placeholder='Email'
+            keyboardType='email-address'
+            returnKeyType='done'
+            placeholderTextColor={'gray'}
+          />
+          <TextInput
+            className='w-full p-4 border-2 border-gray-300 rounded-lg'
+            onChangeText={(text) =>
+              setSignUpObj({ ...singUpObj, password: text })
+            }
+            placeholder='Password'
+            secureTextEntry
+            returnKeyType='done'
+            placeholderTextColor={'gray'}
+          />
+
+          <TextInput
+            className='w-full p-4 border-2 border-gray-300 rounded-lg'
+            onChangeText={(text) =>
+              setSignUpObj({ ...singUpObj, passwordConfirm: text })
+            }
+            placeholder='Confirm Password'
+            secureTextEntry
+            returnKeyType='done'
+            placeholderTextColor={'gray'}
+          />
+        </View>
+
+        <TouchableOpacity
+          onPress={handleSignUp}
+          disabled={isLoading}
+          className='w-full p-4 bg-blue-500 rounded-lg'
+        >
+          <Text className='text-white text-center'>
+            {isLoading ? 'Loading...' : 'Sign Up'}
+          </Text>
+        </TouchableOpacity>
+
+        <View className='flex-row items-center gap-1'>
+          <Text className='text-center text-darkGrey text-lg'>
+            Already have an account?
+          </Text>
+          <Link href={'/signIn'} asChild>
+            <Text className='text-blue-500 text-lg'>Sign in</Text>
+          </Link>
+        </View>
       </View>
-
-      <Image
-        source={require('@/assets/images/Scenes/Scenes07.jpg')}
-        className='w-full h-[250px] rounded-lg'
-      />
-
-      <View className='w-full gap-4'>
-        <TextInput
-          className='w-full p-4 border-2 border-gray-300 rounded-lg'
-          onChangeText={(text) =>
-            setSignUpObj({ ...singUpObj, first_name: text })
-          }
-          placeholder='First Name'
-          returnKeyType='next'
-        />
-        <TextInput
-          className='w-full p-4 border-2 border-gray-300 rounded-lg'
-          onChangeText={(text) =>
-            setSignUpObj({ ...singUpObj, last_name: text })
-          }
-          placeholder='Last Name'
-          returnKeyType='next'
-        />
-        <TextInput
-          className='w-full p-4 border-2 border-gray-300 rounded-lg'
-          onChangeText={(text) => setSignUpObj({ ...singUpObj, email: text })}
-          placeholder='Email'
-          keyboardType='email-address'
-          returnKeyType='done'
-        />
-        <TextInput
-          className='w-full p-4 border-2 border-gray-300 rounded-lg'
-          onChangeText={(text) =>
-            setSignUpObj({ ...singUpObj, password: text })
-          }
-          placeholder='Password'
-          secureTextEntry
-          returnKeyType='done'
-        />
-
-        <TextInput
-          className='w-full p-4 border-2 border-gray-300 rounded-lg'
-          onChangeText={(text) =>
-            setSignUpObj({ ...singUpObj, passwordConfirm: text })
-          }
-          placeholder='Password Confirm'
-          secureTextEntry
-          returnKeyType='done'
-        />
-      </View>
-
-      <TouchableOpacity
-        onPress={handleSignUp}
-        disabled={isLoading}
-        className='w-full p-4 bg-blue-500 rounded-lg'
-      >
-        <Text className='text-white text-center'>
-          {isLoading ? 'Loading...' : 'Sign Up'}
-        </Text>
-      </TouchableOpacity>
-
-      <View className='flex-row items-center gap-1'>
-        <Text className='text-center text-darkGrey text-lg'>
-          Already have an account?
-        </Text>
-        <Link href={'/signIn'} asChild>
-          <Text className='text-blue-500 text-lg'>Sign in</Text>
-        </Link>
-      </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 }

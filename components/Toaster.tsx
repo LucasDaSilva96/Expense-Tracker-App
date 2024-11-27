@@ -10,6 +10,7 @@ type ToasterProps = {
   duration?: number;
 };
 
+// TODO: Implement Toaster component (Not working at the moment)
 export default function Toaster({ message, type, duration }: ToasterProps) {
   const [toastObj] = useState(type === 'error' ? error : success);
   return (
