@@ -49,7 +49,7 @@ const InitialLayout = () => {
 
     if (session && !inAuthGroup) {
       // Redirect authenticated users to the list page
-      router.replace('/home');
+      router.replace('/(authenticated)/(tabs)');
     } else if (!session) {
       // Redirect unauthenticated users to the login page
       router.replace('/signIn');

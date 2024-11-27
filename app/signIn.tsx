@@ -76,7 +76,7 @@ export default function SignInPage() {
             placeholderTextColor={'gray'}
           />
           <TouchableOpacity
-            className='w-full p-4 bg-blue-500 rounded-lg'
+            className='w-full p-4 bg-blue rounded-lg'
             disabled={loading}
             onPress={handleLogin}
           >
@@ -90,7 +90,7 @@ export default function SignInPage() {
             Don't have an account?
           </Text>
           <Link href={'/signUp'} asChild>
-            <Text className='text-blue-500 text-lg'>Sign up</Text>
+            <Text className='text-blue text-lg'>Sign up</Text>
           </Link>
         </View>
       </View>

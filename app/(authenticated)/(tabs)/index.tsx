@@ -8,7 +8,7 @@ export default function HomePage() {
       <Text>Home Page</Text>
       <TouchableOpacity
         onPress={signOut}
-        className='w-full p-4 bg-blue-500 rounded-lg'
+        className='w-full p-4 bg-blue rounded-lg'
       >
         <Text className='text-center text-slate-50'>Sign Out</Text>
       </TouchableOpacity>

@@ -132,9 +132,9 @@ export default function SignUpPage() {
         <TouchableOpacity
           onPress={handleSignUp}
           disabled={isLoading}
-          className='w-full p-4 bg-blue-500 rounded-lg'
+          className='w-full p-4 bg-blue rounded-lg'
         >
-          <Text className='text-white text-center'>
+          <Text className='text-white text-center font-bold'>
             {isLoading ? 'Loading...' : 'Sign Up'}
           </Text>
         </TouchableOpacity>
@@ -144,7 +144,7 @@ export default function SignUpPage() {
             Already have an account?
           </Text>
           <Link href={'/signIn'} asChild>
-            <Text className='text-blue-500 text-lg'>Sign in</Text>
+            <Text className='text-blue text-lg'>Sign in</Text>
           </Link>
         </View>
       </View>
