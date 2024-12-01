@@ -6,9 +6,12 @@ import React, {
   PropsWithChildren,
 } from 'react';
 import { Session, User } from '@supabase/supabase-js';
+import { User_DB } from '@/types/database.types';
+import { getUser } from '@/services/auth';
 
 type AuthProps = {
-  user: User | null;
+  user_auth: User | null;
+  user: User_DB | null;
   session: Session | null;
   initialized?: boolean;
   signOut?: () => void;
@@ -24,15 +27,17 @@ export function useAuth() {
 
 // Provider component that wraps your app and makes auth object available to any child component that calls useAuth().
 export const AuthProvider = ({ children }: PropsWithChildren) => {
-  const [user, setUser] = useState<User | null>();
+  const [user_auth, set_auth_user] = useState<User | null>();
   const [session, setSession] = useState<Session | null>(null);
   const [initialized, setInitialized] = useState<boolean>(false);
+
+  const [user, setUser] = useState<User_DB | null>();
 
   useEffect(() => {
     // Listen for changes to authentication state
     const { data } = supabase.auth.onAuthStateChange(async (event, session) => {
       setSession(session);
-      setUser(session ? session.user : null);
+      set_auth_user(session ? session.user : null);
       setInitialized(true);
     });
     return () => {
@@ -40,16 +45,30 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     };
   }, []);
 
+  useEffect(() => {
+    (async () => {
+      if (user_auth && user_auth.email) {
+        try {
+          const user = await getUser(user_auth.email);
+          setUser(user);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    })();
+  }, [user_auth]);
+
   // Log out the user
   const signOut = async () => {
     await supabase.auth.signOut();
   };
 
   const value = {
-    user,
+    user_auth,
     session,
     initialized,
     signOut,
+    user,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

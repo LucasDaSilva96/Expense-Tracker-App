@@ -60,3 +60,18 @@ export const signUp = async ({
 export const signOut = async () => {
   await supabase.auth.signOut();
 };
+
+// Get the current user
+export const getUser = async (email: string) => {
+  const { data, error } = await supabase
+    .from('users')
+    .select()
+    .eq('email', email)
+    .single();
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+};

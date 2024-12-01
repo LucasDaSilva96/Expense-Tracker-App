@@ -6,6 +6,16 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[];
 
+export type User_DB = {
+  avatar: string | null;
+  created_at: string;
+  email: string;
+  first_name: string;
+  id: string;
+  last_name: string;
+  has_membership: boolean;
+};
+
 export type Database = {
   public: {
     Tables: {
