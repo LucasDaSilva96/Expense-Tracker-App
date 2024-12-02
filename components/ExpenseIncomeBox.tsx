@@ -32,12 +32,11 @@ export default function ExpenseIncomeBox({ type, amount }: Props) {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
     borderRadius: 10,
     backgroundColor: '#fff',
     flexDirection: 'row',
     gap: 5,
-    minWidth: 180,
+    minWidth: 190,
     height: 80,
     alignItems: 'center',
     justifyContent: 'center',

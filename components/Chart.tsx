@@ -1,51 +1,47 @@
 import { StyleSheet, View } from 'react-native';
 import { LineChart } from 'react-native-gifted-charts';
 
-export default function Chart() {
-  const data = [
-    { value: 55, label: 'Sun', dataPointText: '55$' },
-    { value: 80, dataPointText: '80$', label: 'Mon' },
-    { value: 700, dataPointText: '700$', label: 'Tue' },
-    { value: 4, dataPointText: '4$', label: 'Wed' },
-    { value: 65, dataPointText: '65$', label: 'Thu' },
-    { value: 10, dataPointText: '10$', label: 'Fri' },
-    { value: 550, label: 'Sun', dataPointText: '55' },
-    { value: 65, dataPointText: '80$', label: 'Mon' },
-    { value: 70, dataPointText: '700$', label: 'Tue' },
-    { value: 46, dataPointText: '4$', label: 'Wed' },
-    { value: 40, dataPointText: '65$', label: 'Thu' },
-    { value: 100, dataPointText: '10$', label: 'Fri' },
-  ];
+type Props = {
+  data: { value: number; dataPointText?: string }[];
+};
 
+export default function Chart({ data }: Props) {
   return (
     <View style={styles.chartContainer}>
       <LineChart
         overflowTop={10}
-        height={280}
+        height={281.5}
         data={data}
-        initialSpacing={10}
-        spacing={55}
+        curved
+        spacing={70}
+        curvature={0.28}
         textColor='#000'
-        textShiftY={-8}
-        textShiftX={0}
-        textFontSize={15}
-        thickness={3}
+        textShiftY={-4}
+        textFontSize={13}
         isAnimated
         hideDataPoints={false}
         backgroundColor={'#fff'}
         color='#0666EB'
         yAxisColor={'#D9D9D9'}
         xAxisColor={'#D9D9D9'}
-        hideOrigin
         areaChart
         startFillColor={'#b4d1f9'}
         endFillColor={'#b4d1f9'}
-        startOpacity={0.4}
-        endOpacity={0.8}
-        rulesType='solid'
-        // rulesColor={'#D9D9D9'}
-        hideRules
-        rulesThickness={1}
+        startOpacity={0.9}
+        endOpacity={0.6}
+        initialSpacing={15}
+        adjustToWidth
+        yAxisLabelSuffix='$'
+        startIndex={0}
+        rulesType='dashed'
+        stepValue={100}
+        overflowBottom={0}
+        animateOnDataChange
+        showVerticalLines
+        verticalLinesStrokeDashArray={[5, 5]}
+        yAxisLabelContainerStyle={{ width: 50 }}
+        xAxisLength={data.length}
+        // xAxisLabelTextStyle={{ transform: [{ translateX: -10 }] }}
       />
     </View>
   );

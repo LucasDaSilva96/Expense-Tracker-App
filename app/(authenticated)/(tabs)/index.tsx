@@ -1,16 +1,37 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  ScrollView,
-} from 'react-native';
-import React from 'react';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import React, { useState } from 'react';
 import HomeHeader from '@/components/headers/HomeHeader';
 import ExpenseIncomeBox from '@/components/ExpenseIncomeBox';
 import Chart from '@/components/Chart';
+import HomeDropDown from '@/components/HomeDropDown';
 
 export default function HomePage() {
+  // TODO: Implement the logic to switch between data_week and data_month
+  const week = [
+    { value: 0 },
+    { value: 80, dataPointText: '80 Mon' },
+    { value: 700, dataPointText: '700 Tue' },
+    { value: 4, dataPointText: '4 Wed' },
+    { value: 65, dataPointText: '65 Thu' },
+    { value: 10, dataPointText: '10 Fri' },
+    { value: 100, dataPointText: '100 Sat' },
+    { value: 550, dataPointText: '55 Sun' },
+    { value: 0 },
+  ];
+
+  const month = [
+    { value: 0 },
+    { value: 1000, dataPointText: '1000 Jan' },
+    { value: 500, dataPointText: '500 Feb' },
+    { value: 400, dataPointText: '400 Mar' },
+    { value: 300, dataPointText: '300 Apr' },
+    { value: 200, dataPointText: '200 May' },
+    { value: 100, dataPointText: '100 Jun' },
+    { value: 0 },
+  ];
+
+  const [data, setData] = useState(week);
+
   return (
     <View style={styles.container}>
       <HomeHeader />
@@ -21,7 +42,7 @@ export default function HomePage() {
         }}
         contentContainerStyle={{
           alignItems: 'center',
-          gap: 10,
+          gap: 15,
           width: '100%',
         }}
         showsVerticalScrollIndicator={false}
@@ -37,8 +58,18 @@ export default function HomePage() {
         </View>
 
         <View style={styles.chartContainer}>
-          <Text style={styles.chartText}>Expense Chart</Text>
-          <Chart />
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              width: '99%',
+              alignItems: 'center',
+            }}
+          >
+            <Text style={styles.chartText}>Expense Chart</Text>
+            <HomeDropDown setData={setData} week={week} month={month} />
+          </View>
+          <Chart data={data} />
         </View>
       </ScrollView>
     </View>
@@ -74,7 +105,8 @@ const styles = StyleSheet.create({
     gap: 5,
     width: '100%',
     overflowX: 'scroll',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   chartContainer: {
     width: '100%',
