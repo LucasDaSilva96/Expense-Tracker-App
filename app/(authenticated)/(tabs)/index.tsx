@@ -1,9 +1,12 @@
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
 import React, { useState } from 'react';
 import HomeHeader from '@/components/headers/HomeHeader';
 import ExpenseIncomeBox from '@/components/ExpenseIncomeBox';
 import Chart from '@/components/Chart';
 import HomeDropDown from '@/components/HomeDropDown';
+import GoalBox from '@/components/GoalBox';
+import { Ionicons } from '@expo/vector-icons';
+import { Link } from 'expo-router';
 
 export default function HomePage() {
   // TODO: Implement the logic to switch between data_week and data_month
@@ -31,6 +34,27 @@ export default function HomePage() {
   ];
 
   const [data, setData] = useState(week);
+
+  const goals = [
+    {
+      iconName: 'home',
+      name: 'Iphone16',
+      target_amount: 1000,
+      current_amount: 500,
+    },
+    {
+      iconName: 'airplane',
+      name: 'Travel to Paris',
+      target_amount: 2000,
+      current_amount: 800,
+    },
+    {
+      iconName: 'car-sport',
+      name: 'Buy a car',
+      target_amount: 3000,
+      current_amount: 1000,
+    },
+  ];
 
   return (
     <View style={styles.container}>
@@ -71,7 +95,36 @@ export default function HomePage() {
           </View>
           <Chart data={data} />
         </View>
+
+        <Text style={styles.goalsText}>Goals</Text>
+        {goals.map((goal, index) => (
+          <GoalBox
+            key={index}
+            {...goal}
+            iconName={goal.iconName as keyof typeof Ionicons.glyphMap}
+          />
+        ))}
       </ScrollView>
+      <Link
+        href={'/modal'}
+        asChild
+        style={{
+          position: 'absolute',
+          bottom: 10,
+          right: 10,
+          zIndex: 10,
+        }}
+      >
+        <Pressable
+          style={{
+            padding: 4,
+            backgroundColor: '#0666EB',
+            borderRadius: 50,
+          }}
+        >
+          <Ionicons name='add' size={40} color='#fff' />
+        </Pressable>
+      </Link>
     </View>
   );
 }
@@ -80,7 +133,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: '100%',
-    alignItems: 'center',
     padding: 5,
     gap: 10,
   },
@@ -116,5 +168,10 @@ const styles = StyleSheet.create({
   chartText: {
     fontSize: 15,
     fontWeight: 'bold',
+  },
+  goalsText: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    alignSelf: 'flex-start',
   },
 });

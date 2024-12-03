@@ -62,6 +62,7 @@ export type Database = {
           status: 'active' | 'completed' | 'missed';
           target_amount: number;
           user_id: string;
+          iconName: string;
         };
         Insert: {
           created_at?: string;
@@ -73,6 +74,7 @@ export type Database = {
           status?: string;
           target_amount: number;
           user_id: string;
+          iconName: string;
         };
         Update: {
           created_at?: string;
@@ -84,6 +86,7 @@ export type Database = {
           status?: string;
           target_amount?: number;
           user_id?: string;
+          iconName?: string;
         };
         Relationships: [
           {
