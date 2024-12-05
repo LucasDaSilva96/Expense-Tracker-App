@@ -26,6 +26,8 @@ export type Database = {
           id: string;
           name: string;
           type: 'income' | 'expense';
+          iconName: string;
+          color: string;
         };
         Insert: {
           created_at?: string;
@@ -33,6 +35,8 @@ export type Database = {
           id?: string;
           name: string;
           type: string;
+          iconName: string;
+          color: string;
         };
         Update: {
           created_at?: string;
@@ -40,6 +44,8 @@ export type Database = {
           id?: string;
           name?: string;
           type?: string;
+          iconName?: string;
+          color?: string;
         };
         Relationships: [
           {

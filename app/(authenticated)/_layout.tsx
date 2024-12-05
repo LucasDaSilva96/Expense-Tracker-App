@@ -13,7 +13,7 @@ export default function AuthenticatedLayout() {
           options={{
             presentation: 'modal',
             headerTitleAlign: 'center',
-            title: 'Add Budget',
+            title: 'Add Transaction',
             headerRight: () => (
               <Pressable>
                 <Text style={{ color: '#0666EB' }}>Save</Text>

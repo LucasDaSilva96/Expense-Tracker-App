@@ -33,11 +33,11 @@ export default function Chart({ data }: Props) {
         adjustToWidth
         yAxisLabelSuffix='$'
         startIndex={0}
-        rulesType='dashed'
+        rulesType='solid'
         stepValue={100}
         overflowBottom={0}
         animateOnDataChange
-        showVerticalLines
+        // showVerticalLines
         verticalLinesStrokeDashArray={[5, 5]}
         yAxisLabelContainerStyle={{ width: 50 }}
         xAxisLength={data.length}

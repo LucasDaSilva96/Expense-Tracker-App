@@ -9,7 +9,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Link } from 'expo-router';
 
 export default function HomePage() {
-  // TODO: Implement the logic to switch between data_week and data_month
+  // TODO: Implement the logic to get the data for the chart and goals
   const week = [
     { value: 0 },
     { value: 80, dataPointText: '80 Mon' },
@@ -18,7 +18,7 @@ export default function HomePage() {
     { value: 65, dataPointText: '65 Thu' },
     { value: 10, dataPointText: '10 Fri' },
     { value: 100, dataPointText: '100 Sat' },
-    { value: 550, dataPointText: '55 Sun' },
+    { value: 550, dataPointText: '550 Sun' },
     { value: 0 },
   ];
 
