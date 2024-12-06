@@ -17,8 +17,19 @@ export default function Modal() {
           ]}
           onPress={() => setTypeOfTransaction('expense')}
         >
-          <Text style={styles.btnText}>Expense</Text>
-          <Ionicons name='trending-down' color={'#000'} size={20} />
+          <Text
+            style={[
+              styles.btnText,
+              { color: typeOfTransaction === 'expense' ? '#fff' : '#000' },
+            ]}
+          >
+            Expense
+          </Text>
+          <Ionicons
+            name='trending-down'
+            color={typeOfTransaction === 'expense' ? '#fff' : '#000'}
+            size={20}
+          />
         </Pressable>
         <Pressable
           style={[
@@ -27,8 +38,19 @@ export default function Modal() {
           ]}
           onPress={() => setTypeOfTransaction('income')}
         >
-          <Text style={styles.btnText}>Income</Text>
-          <Ionicons name='trending-up' color={'#000'} size={20} />
+          <Text
+            style={[
+              styles.btnText,
+              { color: typeOfTransaction === 'income' ? '#fff' : '#000' },
+            ]}
+          >
+            Income
+          </Text>
+          <Ionicons
+            name='trending-up'
+            color={typeOfTransaction === 'income' ? '#fff' : '#000'}
+            size={20}
+          />
         </Pressable>
       </View>
       <Text

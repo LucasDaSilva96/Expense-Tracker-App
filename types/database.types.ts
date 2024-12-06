@@ -6,6 +6,13 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[];
 
+export type Wallet = {
+  user_id: string;
+  account_name: string;
+  balance: Number;
+  iconName: string;
+};
+
 export type User_DB = {
   avatar: string | null;
   created_at: string;
@@ -19,6 +26,20 @@ export type User_DB = {
 export type Database = {
   public: {
     Tables: {
+      wallet: {
+        Row: Wallet; // The shape of a row in the `wallet` table
+        Insert: {
+          user_id: string;
+          account_name: string;
+          bank_name: string;
+          balance?: number; // Optional on insert, defaults to 0.00
+        };
+        Update: {
+          account_name?: string;
+          bank_name?: string;
+          balance?: number; // Optional on insert, defaults to 0.00
+        };
+      };
       categories: {
         Row: {
           created_at: string;
@@ -203,6 +224,7 @@ export type Database = {
           transaction_date: string;
           type: 'income' | 'expense';
           user_id: string;
+          wallet_id: string;
         };
         Insert: {
           amount: number;
@@ -213,6 +235,7 @@ export type Database = {
           transaction_date: string;
           type: string;
           user_id: string;
+          wallet_id: string;
         };
         Update: {
           amount?: number;
@@ -223,6 +246,7 @@ export type Database = {
           transaction_date?: string;
           type?: string;
           user_id?: string;
+          wallet_id?: string;
         };
         Relationships: [
           {

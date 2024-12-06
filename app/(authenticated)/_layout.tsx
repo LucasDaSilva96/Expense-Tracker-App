@@ -14,11 +14,11 @@ export default function AuthenticatedLayout() {
             presentation: 'modal',
             headerTitleAlign: 'center',
             title: 'Add Transaction',
-            headerRight: () => (
-              <Pressable>
-                <Text style={{ color: '#0666EB' }}>Save</Text>
-              </Pressable>
-            ),
+            // headerRight: () => (
+            //   <Pressable>
+            //     <Text style={{ color: '#0666EB' }}>Save</Text>
+            //   </Pressable>
+            // ),
           }}
         />
       </Stack>

@@ -6,23 +6,27 @@ import {
   Pressable,
   Keyboard,
 } from 'react-native';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { Calendar } from 'react-native-calendars';
 import CategoriesMiniModal from '../CategoriesMiniModal';
+import AccountDropDown from '../AccountDropDown';
 
 export default function Expense() {
-  const amount = useRef<TextInput | null>(null);
-  const [date, setDate] = useState('');
+  const [expenseObj, setExpenseObj] = useState({
+    amount: '',
+    date: '',
+    selectedCategory: {
+      name: '',
+      iconName: '',
+      color: '',
+    },
+    notes: '',
+    account_id: '',
+  });
   const [isCalendarVisible, setIsCalendarVisible] = useState(false);
 
-  const [notes, setNotes] = useState('');
-
-  const [selectedCategory, setSelectedCategory] = useState({
-    name: '',
-    iconName: '',
-    color: '',
-  });
+  const [isSummitable, setISummitable] = useState(false);
 
   const [showCategories, setShowCategories] = useState(false);
 
@@ -46,13 +50,25 @@ export default function Expense() {
     setShowCategories(false);
   };
 
+  useEffect(() => {
+    if (
+      !expenseObj.amount ||
+      !expenseObj.date ||
+      !expenseObj.selectedCategory.name ||
+      !expenseObj.account_id
+    ) {
+      setISummitable(false);
+    } else {
+      setISummitable(true);
+    }
+  }, [expenseObj]);
+
   return (
     <View style={styles.container}>
       <View style={styles.amountContainer}>
         <Ionicons name='cash' color={'#0666EB'} size={22} />
         <Text style={styles.amountText}>Amount</Text>
         <TextInput
-          ref={amount}
           style={{
             height: 40,
             color: '#000',
@@ -66,6 +82,15 @@ export default function Expense() {
           keyboardAppearance='dark'
           keyboardType='numeric'
           returnKeyType='done'
+          value={expenseObj.amount}
+          onChangeText={(text) =>
+            setExpenseObj((obj) => {
+              return {
+                ...obj,
+                amount: text,
+              };
+            })
+          }
         />
       </View>
 
@@ -77,11 +102,16 @@ export default function Expense() {
           <View style={styles.calendar}>
             <Calendar
               onDayPress={(day: { dateString: string }) => {
-                setDate(day.dateString);
+                setExpenseObj((e) => {
+                  return {
+                    ...e,
+                    date: day.dateString,
+                  };
+                });
                 setIsCalendarVisible(false);
               }}
               markedDates={{
-                [date]: {
+                [expenseObj.date]: {
                   selected: true,
                   selectedColor: '#0666EB',
                 },
@@ -101,19 +131,24 @@ export default function Expense() {
             fontWeight: 'semibold',
           }}
         >
-          {date ? date : 'Select Transaction Date'}
+          {expenseObj.date ? expenseObj.date : 'Select Transaction Date'}
         </Text>
       </Pressable>
 
       <Pressable style={styles.dateBtn} onPress={openCategories}>
         <Ionicons
           name={
-            selectedCategory.iconName
-              ? (selectedCategory.iconName as keyof typeof Ionicons.glyphMap)
+            expenseObj.selectedCategory.iconName
+              ? (expenseObj.selectedCategory
+                  .iconName as keyof typeof Ionicons.glyphMap)
               : 'apps'
           }
           size={22}
-          color={selectedCategory.color ? selectedCategory.color : '#0666EB'}
+          color={
+            expenseObj.selectedCategory.color
+              ? expenseObj.selectedCategory.color
+              : '#0666EB'
+          }
         />
         <Text
           style={{
@@ -123,106 +158,93 @@ export default function Expense() {
             fontWeight: 'semibold',
           }}
         >
-          {selectedCategory.name ? selectedCategory.name : 'Select Category'}
+          {expenseObj.selectedCategory.name
+            ? expenseObj.selectedCategory.name
+            : 'Select Category'}
         </Text>
       </Pressable>
 
       {showCategories && (
         <CategoriesMiniModal
           setShowCategories={setShowCategories}
-          selectedCategory={selectedCategory}
-          setSelectedCategory={setSelectedCategory}
+          selectedCategory={expenseObj.selectedCategory}
+          setSelectedCategory={setExpenseObj}
         />
       )}
 
-      <View>
-        <Pressable onPress={openNotesHandler} style={styles.dateBtn}>
-          <Ionicons name='book' size={22} color={'#0666EB'} />
-          <Text
-            style={{
-              color: '#000',
-              textAlign: 'center',
-              fontSize: 18,
-              fontWeight: 'semibold',
-            }}
-          >
-            {notes ? notes : 'Add Notes'}
-          </Text>
-        </Pressable>
+      <View
+        style={{
+          width: '100%',
+          flexDirection: 'row',
+          alignItems: 'center',
+          gap: 5,
+        }}
+      >
+        <Ionicons name='wallet-sharp' size={22} color={'#0666EB'} />
+        <AccountDropDown
+          account_id={expenseObj.account_id}
+          setAccount={setExpenseObj}
+        />
       </View>
 
-      {openNotes && (
-        <View>
-          <TextInput
-            multiline={true}
-            blurOnSubmit={true}
-            onSubmitEditing={() => {
-              Keyboard.dismiss();
-            }}
-            spellCheck
-            returnKeyType='done'
-            returnKeyLabel='done'
-            keyboardAppearance='dark'
-            placeholder='Add notes here'
-            placeholderTextColor={'#919191'}
-            style={{
-              color: '#000',
-              padding: 10,
-              width: '100%',
-              fontSize: 18,
-              fontWeight: 'semibold',
-              backgroundColor: '#fff',
-              borderRadius: 10,
-              minHeight: 100,
-            }}
-            value={notes}
-            onChangeText={(text) => setNotes(text)}
-          />
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-evenly',
-              gap: 10,
-              marginTop: 10,
-            }}
-          >
-            <Pressable
-              style={{
-                backgroundColor: '#0666EB',
-                padding: 10,
-                borderRadius: 10,
-                marginTop: 10,
-                width: 150,
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexDirection: 'row',
-              }}
-            >
-              <Ionicons
-                name='checkmark-circle-sharp'
-                size={32}
-                color={'#fff'}
-              />
-            </Pressable>
+      <View
+        style={{
+          width: '100%',
+          flexDirection: 'row',
+          alignItems: 'center',
+          gap: 5,
+        }}
+      >
+        <Ionicons name='book' size={22} color={'#0666EB'} />
+        <TextInput
+          style={{
+            height: 40,
+            color: '#000',
+            padding: 10,
+            width: '100%',
+            fontSize: 18,
+            fontWeight: 'semibold',
+          }}
+          placeholder='Add notes'
+          placeholderTextColor={'#919191'}
+          keyboardAppearance='dark'
+          returnKeyType='done'
+          value={expenseObj.notes}
+          onChangeText={(text) =>
+            setExpenseObj((obj) => {
+              return {
+                ...obj,
+                notes: text,
+              };
+            })
+          }
+        />
+      </View>
 
-            <Pressable
-              onPress={() => setOpenNotes(false)}
-              style={{
-                backgroundColor: '#919191',
-                padding: 10,
-                borderRadius: 10,
-                marginTop: 10,
-                width: 150,
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexDirection: 'row',
-              }}
-            >
-              <Ionicons name='close-circle-sharp' size={32} color={'#fff'} />
-            </Pressable>
-          </View>
-        </View>
-      )}
+      <Pressable
+        disabled={!isSummitable}
+        style={{
+          width: '100%',
+          backgroundColor: '#0666EB',
+          padding: 15,
+          borderRadius: 10,
+          marginTop: 'auto',
+          marginBottom: 20,
+          opacity: isSummitable ? 1 : 0.7,
+        }}
+        onPress={() => console.log(expenseObj)}
+      >
+        <Text
+          style={{
+            textAlign: 'center',
+            fontWeight: 'semibold',
+            color: '#fff',
+            fontSize: 18,
+          }}
+        >
+          Save
+        </Text>
+      </Pressable>
     </View>
   );
 }
@@ -232,7 +254,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 5,
     position: 'relative',
-    gap: 10,
+    gap: 20,
   },
   amountContainer: {
     flexDirection: 'row',
