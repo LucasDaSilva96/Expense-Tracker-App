@@ -1,4 +1,11 @@
-import { View, Text, StyleSheet, TextInput, Pressable } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  Pressable,
+  Keyboard,
+} from 'react-native';
 import React, { useRef, useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { Calendar } from 'react-native-calendars';
@@ -9,6 +16,8 @@ export default function Expense() {
   const [date, setDate] = useState('');
   const [isCalendarVisible, setIsCalendarVisible] = useState(false);
 
+  const [notes, setNotes] = useState('');
+
   const [selectedCategory, setSelectedCategory] = useState({
     name: '',
     iconName: '',
@@ -17,20 +26,30 @@ export default function Expense() {
 
   const [showCategories, setShowCategories] = useState(false);
 
+  const [openNotes, setOpenNotes] = useState(false);
+
   const openCalendar = () => {
     setIsCalendarVisible(true);
     setShowCategories(false);
+    setOpenNotes(false);
   };
 
   const openCategories = () => {
     setShowCategories(true);
     setIsCalendarVisible(false);
+    setOpenNotes(false);
+  };
+
+  const openNotesHandler = () => {
+    setOpenNotes(true);
+    setIsCalendarVisible(false);
+    setShowCategories(false);
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.amountContainer}>
-        <Ionicons name='cash-sharp' color={'#0666EB'} size={22} />
+        <Ionicons name='cash' color={'#0666EB'} size={22} />
         <Text style={styles.amountText}>Amount</Text>
         <TextInput
           ref={amount}
@@ -114,6 +133,95 @@ export default function Expense() {
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}
         />
+      )}
+
+      <View>
+        <Pressable onPress={openNotesHandler} style={styles.dateBtn}>
+          <Ionicons name='book' size={22} color={'#0666EB'} />
+          <Text
+            style={{
+              color: '#000',
+              textAlign: 'center',
+              fontSize: 18,
+              fontWeight: 'semibold',
+            }}
+          >
+            {notes ? notes : 'Add Notes'}
+          </Text>
+        </Pressable>
+      </View>
+
+      {openNotes && (
+        <View>
+          <TextInput
+            multiline={true}
+            blurOnSubmit={true}
+            onSubmitEditing={() => {
+              Keyboard.dismiss();
+            }}
+            spellCheck
+            returnKeyType='done'
+            returnKeyLabel='done'
+            keyboardAppearance='dark'
+            placeholder='Add notes here'
+            placeholderTextColor={'#919191'}
+            style={{
+              color: '#000',
+              padding: 10,
+              width: '100%',
+              fontSize: 18,
+              fontWeight: 'semibold',
+              backgroundColor: '#fff',
+              borderRadius: 10,
+              minHeight: 100,
+            }}
+            value={notes}
+            onChangeText={(text) => setNotes(text)}
+          />
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-evenly',
+              gap: 10,
+              marginTop: 10,
+            }}
+          >
+            <Pressable
+              style={{
+                backgroundColor: '#0666EB',
+                padding: 10,
+                borderRadius: 10,
+                marginTop: 10,
+                width: 150,
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexDirection: 'row',
+              }}
+            >
+              <Ionicons
+                name='checkmark-circle-sharp'
+                size={32}
+                color={'#fff'}
+              />
+            </Pressable>
+
+            <Pressable
+              onPress={() => setOpenNotes(false)}
+              style={{
+                backgroundColor: '#919191',
+                padding: 10,
+                borderRadius: 10,
+                marginTop: 10,
+                width: 150,
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexDirection: 'row',
+              }}
+            >
+              <Ionicons name='close-circle-sharp' size={32} color={'#fff'} />
+            </Pressable>
+          </View>
+        </View>
       )}
     </View>
   );

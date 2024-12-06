@@ -13,24 +13,22 @@ export default function Modal() {
         <Pressable
           style={[
             styles.btn,
-            { backgroundColor: '#f9a8a8' },
             typeOfTransaction === 'expense' && styles.btnSelected,
           ]}
           onPress={() => setTypeOfTransaction('expense')}
         >
           <Text style={styles.btnText}>Expense</Text>
-          <Ionicons name='trending-down' color={'red'} size={20} />
+          <Ionicons name='trending-down' color={'#000'} size={20} />
         </Pressable>
         <Pressable
           style={[
             styles.btn,
-            { backgroundColor: '#abe8ba' },
             typeOfTransaction === 'income' && styles.btnSelected,
           ]}
           onPress={() => setTypeOfTransaction('income')}
         >
           <Text style={styles.btnText}>Income</Text>
-          <Ionicons name='trending-up' color={'green'} size={20} />
+          <Ionicons name='trending-up' color={'#000'} size={20} />
         </Pressable>
       </View>
       <Text
@@ -68,6 +66,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: 5,
     width: '40%',
+    backgroundColor: '#fff',
   },
   btnText: {
     color: '#000',
@@ -85,5 +84,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 1,
+    backgroundColor: '#0666EB',
   },
 });
